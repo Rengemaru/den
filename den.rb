@@ -36,7 +36,7 @@ end
 class Window < Gosu::Window
     def initialize
         super 800, 600
-        self.caption = "プログラミングサークル_電光掲示板"
+        self.caption = "部室電光掲示板"
         @content = Content.new
     end
 
