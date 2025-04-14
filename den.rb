@@ -4,7 +4,7 @@ require 'gosu'
 print "表示する文字を入力してください："
 Input_text = gets.chomp
 Input_count = Input_text.length
-print "色を選択してください 1:赤 2:緑 n3:青 4:黄："
+print "色を選択してください 1:赤 2:緑 3:青 4:黄："
 Input_color = gets.chomp
 Input_color_code = Gosu::Color::RED if Input_color == "1"
 Input_color_code = Gosu::Color::GREEN if Input_color == "2"
