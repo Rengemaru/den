@@ -55,10 +55,13 @@ class Content
         @input_count = @input_text.length
         print "色を選択してください 1:赤 2:緑 3:青 4:黄："
         @input_color = gets.chomp
-        @input_color_code = Gosu::Color::RED if @input_color == "1"
-        @input_color_code = Gosu::Color::GREEN if @input_color == "2"
-        @input_color_code = Gosu::Color::BLUE if @input_color == "3"
-        @input_color_code = Gosu::Color::YELLOW if @input_color == "4"
+        @input_color_code = case @input_color
+                            when "1" then Gosu::Color::RED
+                            when "2" then Gosu::Color::GREEN
+                            when "3" then Gosu::Color::BLUE
+                            when "4" then Gosu::Color::YELLOW
+                            else Gosu::Color::WHITE
+                            end
         @input_length = @input_count * 82
         @input_frag = 0
     end
