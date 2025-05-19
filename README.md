@@ -12,6 +12,7 @@
 
 - ruby
 - Gosu
+- webrick
 
 ## 使用方法
 

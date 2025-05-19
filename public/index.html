@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form</title>
+</head>
+<body>
+<h1>メッセージ送信フォーム</h1>
+
+<form action="/message" method="get">
+  <label for="text">表示する文字を入力してください:</label><br>
+  <input type="text" id="text" name="text" required><br>
+
+  <label for="color">半角で色を選択してください 1:赤 2:緑 3:青 4:黄：</label><br>
+  <input type="number" id="color" name="color" required><br>
+
+  <label for="font_size">半角で大きさを選択してください 1:小 2:中 3:大：</label><br>
+  <input type="number" id="font_size" name="font_size" required><br>
+
+  <input type="submit" value="送信">
+</form>
+</body>
+</html>
+
