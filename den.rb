@@ -35,7 +35,7 @@ class Content
     include Singleton
 
     attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2, :ip_index, :ip_message
-    attr_reader :input_length, :font_ratio, :font_y_offset, :x, :y, :speed, :my_ip, :my_ip_address, :ip_index, :ip_message
+    attr_reader :input_length, :font_ratio, :font_y_offset, :x, :y, :speed, :my_ip, :my_URL, :ip_index, :ip_message
     
     def initialize
         @font_ratio = Font_size * 0.68
@@ -53,8 +53,8 @@ class Content
         @y = 300
         @speed = -2
         @my_ip = my_address.chomp
-        @my_ip_address = "http://#{my_address}:8000/"
-        puts "URL: #{@my_ip_address}"
+        @my_URL = "http://#{my_address}:8000/"
+        puts "URL: #{@my_URL}"
     end
 
 
