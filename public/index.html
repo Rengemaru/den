@@ -12,11 +12,21 @@
   <label for="text">表示する文字を入力してください:</label><br>
   <input type="text" id="text" name="text" required><br>
 
-  <label for="color">半角で色を選択してください 1:赤 2:緑 3:青 4:黄：</label><br>
-  <input type="number" id="color" name="color" required><br>
+  <label for="color">半角で色を選択してください:</label><br>
+  <select id="color" name="color" required>
+    <option value="1">赤</option>
+    <option value="2">緑</option>
+    <option value="3">青</option>
+    <option value="4">黄</option>
+    <option value="5">白</option>
+  </select><br>
 
-  <label for="font_size">半角で大きさを選択してください 1:小 2:中 3:大：</label><br>
-  <input type="number" id="font_size" name="font_size" required><br>
+  <label for="font_size">半角で大きさを選択してください</label><br>
+  <select id="font_size" name="font_size" required>
+    <option value = "1">小</option>
+    <option value = "2">中</option>
+    <option value = "3">大</option>
+  </select><br>
 
   <input type="submit" value="送信">
 </form>
