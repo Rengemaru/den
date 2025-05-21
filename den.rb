@@ -103,7 +103,7 @@ end
         @input_speed = speed
         @speed = case @input_speed
                     when "1" then -2
-                    when "2" then -5
+                    when "2" then -4
                     when "3" then -8
                     else -2
                 end
