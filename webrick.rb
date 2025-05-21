@@ -61,9 +61,8 @@ class MessageServlet < BaseServlet
     if validate(query, [:text, :color, :font_size])
       target.instance.set_text(query["text"].to_s)
       target.instance.set_color(query["color"].to_s)
-      puts "#{query["color"]}"
       target.instance.set_font_size(query["font_size"].to_s)
-      puts "#{query["font_size"]}"
+      target.instance.set_speed(query["speed"].to_s)
       # ここでキャラクタや電光掲示板に表示する処理を書くことも可能
       succeeded(response)
     else
