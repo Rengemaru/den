@@ -2,6 +2,9 @@ require 'gosu'
 require 'singleton'
 require 'erb'
 require 'socket'
+require 'rqrcode'
+require 'chunky_png'
+require 'stringio'
 
 require_relative 'webrick'
 
@@ -26,7 +29,8 @@ Font_size = case Input_font_size
                 when "3" then 360
                 else 240
             end
-
+print "現在繋いでいるWi-FiのSSIDを入力してください："
+Input_ssid = gets.chomp
 
 # Contentクラスを定義
 
@@ -34,8 +38,8 @@ class Content
 
     include Singleton
 
-    attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2, :ip_index, :ip_message
-    attr_reader :input_length, :font_ratio, :font_y_offset, :x, :y, :speed, :my_ip, :my_ip_address, :ip_index, :ip_message
+    attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2
+    attr_reader :input_length, :font_ratio, :font_y_offset, :x, :y, :speed
     
     def initialize
         @font_ratio = Font_size * 0.68
@@ -52,20 +56,7 @@ class Content
         @x = -600
         @y = 300
         @speed = -2
-        @my_ip = my_address.chomp
-        @my_ip_address = "http://#{my_address}:8000/"
-        puts "URL: #{@my_ip_address}"
     end
-
-
-def my_address
-    udp = UDPSocket.new
-    # クラスBの先頭アドレス,echoポート 実際にはパケットは送信されない。
-    udp.connect("128.0.0.0", 7)
-    adrs = Socket.unpack_sockaddr_in(udp.getsockname)[1]
-    udp.close
-    adrs
-end
 
     def set_text(text)
         @input_text = text
@@ -120,11 +111,70 @@ end
     end
 end
 
+class Qr_make
+    def initialize
+        @x_qr = 800 - 100
+        @y_qr = 600 - 100
+        @my_ip = my_address.chomp
+        @my_URL = "http://#{my_address}:8000/"
+        puts "URL: #{@my_URL}"
+        @font = Gosu::Font.new(50, name: "fonts/NotoSansJP-Regular.ttf")
+        # QRコード作成
+        qrcode = RQRCode::QRCode.new(@my_URL)
+
+        # QRコードをPNGに変換
+        png = qrcode.as_png(
+            bit_depth: 1,
+            border_modules: 4,
+            color_mode: ChunkyPNG::COLOR_GRAYSCALE,
+            color: 'black',
+            file: nil,
+            fill: 'white',
+            module_px_size: 5,
+            resize_exactly_to: false,
+            resize_gte_to: false,
+            size: 100
+        )
+
+        # メモリ上のIOオブジェクトに書き出して、Gosu::Imageとして読み込み
+        # PNGデータをRGBA配列に変換
+        rgba_data = ""
+        png.height.times do |y|
+            png.width.times do |x|
+                color = png[x, y]
+                r = ChunkyPNG::Color.r(color)
+                g = ChunkyPNG::Color.g(color)
+                b = ChunkyPNG::Color.b(color)
+                a = ChunkyPNG::Color.a(color)
+                rgba_data << [r, g, b, a].pack("C4")
+            end
+        end
+        @qr_image = Gosu::Image.from_blob(png.width, png.height, rgba_data)
+    end
+
+    def my_address
+        udp = UDPSocket.new
+        # クラスBの先頭アドレス,echoポート 実際にはパケットは送信されない。
+        udp.connect("128.0.0.0", 7)
+        adrs = Socket.unpack_sockaddr_in(udp.getsockname)[1]
+        udp.close
+        adrs
+    end
+    
+    def update
+    end
+
+    def draw
+        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, 500, 2, 1.0, 1.0, Gosu::Color::WHITE)
+        @qr_image.draw(@x_qr, @y_qr, 2)
+    end
+end
 class Window < Gosu::Window
     def initialize
         super 800, 600
         self.caption = "部室電光掲示板"
         @content = Content.instance
+        @qr_make = Qr_make.new
     end
 
     def update
@@ -134,6 +184,7 @@ class Window < Gosu::Window
 
     def draw
         @content.draw
+        @qr_make.draw
     end
 end
 
