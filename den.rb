@@ -29,7 +29,8 @@ Font_size = case Input_font_size
                 when "3" then 360
                 else 240
             end
-
+print "現在繋いでいるWi-FiのSSIDを入力してください："
+Input_ssid = gets.chomp
 
 # Contentクラスを定義
 
@@ -118,7 +119,6 @@ class Qr_make
         @my_URL = "http://#{my_address}:8000/"
         puts "URL: #{@my_URL}"
         @font = Gosu::Font.new(50, name: "fonts/NotoSansJP-Regular.ttf")
-
         # QRコード作成
         qrcode = RQRCode::QRCode.new(@my_URL)
 
@@ -165,7 +165,7 @@ class Qr_make
     end
 
     def draw
-        @font.draw_text("Wi-Fiを○○に繋いで\nQRコードを読み取ってください", 0, 500, 2, 1.0, 1.0, Gosu::Color::WHITE)
+        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, 500, 2, 1.0, 1.0, Gosu::Color::WHITE)
         @qr_image.draw(@x_qr, @y_qr, 2)
     end
 end
