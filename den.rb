@@ -99,6 +99,16 @@ end
         @x = -600
     end
 
+    def set_speed(speed)
+        @input_speed = speed
+        @speed = case @input_speed
+                    when "1" then -2
+                    when "2" then -5
+                    when "3" then -8
+                    else -2
+                end
+    end
+
     def recalculate_layout
         @font_ratio = @font_size * 0.68
         puts "font_ratio: #{@font_ratio}"
