@@ -88,6 +88,7 @@ class Server
     # エンドポイントのマウント
     @server.mount('/', IndexServlet)
     @server.mount('/message', MessageServlet)
+    @server.mount('/style.css', WEBrick::HTTPServlet::FileHandler, File.expand_path('./public/style.css'))
 
     # アプリケーション終了時の処理（サーバ停止）
     trap('INT') { @server.shutdown }
