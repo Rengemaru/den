@@ -53,11 +53,12 @@ class Content
         @input_length = Input_count * @font_ratio
         @font1 = Gosu::Font.new(Font_size, name: "fonts/NotoSansJP-Regular.ttf")
         @font2 = Gosu::Font.new(Font_size, name: "fonts/NotoSansJP-Regular.ttf")
-        @background_image = Gosu::Image.new("images/black_backgound_color.jpg", tileable: true)
+        @background_image = Gosu::Image.new("images/black_backgound_color.png", tileable: true)
         @x = -600
         @y = 300
         @speed = -2
         @display = 0
+        @time = 0
     end
 
     def set_text(text)
@@ -115,13 +116,19 @@ class Content
     def update
         @x += @speed
         @x = -@input_length + 500 if @x < -(@input_length + (@input_length - 500) + 400)
+        @time = Time.now.strftime("%H")
+        if @time.to_i >= 19 || @time.to_i < 6
+            @display = 1
+        else
+            @display = 0
+        end
     end
 
     def draw
         @font1.draw_text(@input_text, @x, @y - @font_y_offset, 2, 1.0, 1.0, @input_color_code)
         @font2.draw_text(@input_text, @x + @input_length + 400, @y - @font_y_offset, 2, 1.0, 1.0, @input_color_code)
-        if @display == 1
-            @background_image.draw(0, 0, 4)
+        if @display == 1 
+            @background_image.draw(-100, -100, 4, 1000.0 / @background_image.width, 1000.0 / @background_image.height)
         end
     end
 end
