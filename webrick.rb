@@ -63,6 +63,7 @@ class MessageServlet < BaseServlet
       target.instance.set_color(query["color"].to_s)
       target.instance.set_font_size(query["font_size"].to_s)
       target.instance.set_speed(query["speed"].to_s)
+      target.instance.set_display(query["display"].to_s)
       # ここでキャラクタや電光掲示板に表示する処理を書くことも可能
       succeeded(response)
     else
