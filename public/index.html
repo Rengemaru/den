@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel=“stylesheet” href="./style.css"> -->
+  <link rel="stylesheet" href="/den/public/style.css">
   <title>form</title>
 </head>
 <body>
 <h1>メッセージ送信フォーム</h1>
 
 <form action="/message" method="get">
-  <label for="text">表示する文字を入力してください:</label><br>
+  <label for="text">表示する文字を入力してください</label><br>
   <input type="text" id="text" name="text" required><br>
 
-  <label for="color">半角で色を選択してください:</label><br>
+  <label for="color">半角で色を選択してください</label><br>
   <select id="color" name="color" required>
     <option value="1">赤</option>
     <option value="2">緑</option>
@@ -35,7 +37,7 @@
     <option value = "3">早い</option>
   </select><br>
 
-  <input type="submit" value="送信">
+  <input class = send type="submit" value="送信">
 </form>
 </body>
 </html>
