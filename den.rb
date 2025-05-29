@@ -53,9 +53,11 @@ class Content
         @input_length = Input_count * @font_ratio
         @font1 = Gosu::Font.new(Font_size, name: "fonts/NotoSansJP-Regular.ttf")
         @font2 = Gosu::Font.new(Font_size, name: "fonts/NotoSansJP-Regular.ttf")
+        @background_image = Gosu::Image.new("images/black_backgound_color.jpg", tileable: true)
         @x = -600
         @y = 300
         @speed = -2
+        @display = 0
     end
 
     def set_text(text)
@@ -100,6 +102,10 @@ class Content
                 end
     end
 
+    def set_display(display)
+        @display = display.to_i
+    end
+
     def recalculate_layout
         @font_ratio = @font_size * 0.68
         puts "font_ratio: #{@font_ratio}"
@@ -118,6 +124,9 @@ class Content
     def draw
         @font1.draw_text(@input_text, @x, @y - @font_y_offset, 2, 1.0, 1.0, @input_color_code)
         @font2.draw_text(@input_text, @x + @input_length + 400, @y - @font_y_offset, 2, 1.0, 1.0, @input_color_code)
+        if @display == 1
+            @background_image.draw(0, 0, 4)
+        end
     end
 end
 
