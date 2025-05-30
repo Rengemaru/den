@@ -131,12 +131,13 @@ end
 
 class Qr_make
     def initialize
-        @x_qr = 800 - 100
-        @y_qr = 600 - 100
+        @qr_size = 133 # QRコードのサイズ
+        @x_qr = 800 - @qr_size
+        @y_qr = 600 - @qr_size
         @my_ip = my_address.chomp
         @my_URL = "http://#{my_address}:8000/"
         puts "URL: #{@my_URL}"
-        @font = Gosu::Font.new(50, name: "fonts/NotoSansJP-Regular.ttf")
+        @font = Gosu::Font.new(@qr_size / 2, name: "fonts/NotoSansJP-Regular.ttf")
         # QRコード作成
         qrcode = RQRCode::QRCode.new(@my_URL)
 
@@ -151,7 +152,7 @@ class Qr_make
             module_px_size: 5,
             resize_exactly_to: false,
             resize_gte_to: false,
-            size: 100
+            size: @qr_size
         )
 
         # メモリ上のIOオブジェクトに書き出して、Gosu::Imageとして読み込み
@@ -183,7 +184,7 @@ class Qr_make
     end
 
     def draw
-        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, 500, 2, 1.0, 1.0, Gosu::Color::WHITE)
+        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, (600 - @qr_size), 2, 1.0, 1.0, Gosu::Color::WHITE)
         @qr_image.draw(@x_qr, @y_qr, 2)
     end
 end
