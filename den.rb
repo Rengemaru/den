@@ -57,7 +57,7 @@ class Content
         @x = -600
         @y = 300
         @speed = -2
-        @display = 0
+        @display = 0 # 0:表示する, 1:表示しない
         @time = 0
     end
 
@@ -101,10 +101,6 @@ class Content
                 end
     end
 
-    def set_display(display)
-        @display = display.to_i
-    end
-
     def recalculate_layout
         @font_ratio = @font_size * 0.68
         @font_y_offset = @font_size * 0.45
@@ -119,6 +115,8 @@ class Content
         @time = Time.now.strftime("%H")
         if @time.to_i >= 19 || @time.to_i <= 7
             @display = 1
+        else
+            @display = 0
         end
     end
 
@@ -133,12 +131,13 @@ end
 
 class Qr_make
     def initialize
-        @x_qr = 800 - 100
-        @y_qr = 600 - 100
+        @qr_size = 133 # QRコードのサイズ
+        @x_qr = 800 - @qr_size
+        @y_qr = 600 - @qr_size
         @my_ip = my_address.chomp
         @my_URL = "http://#{my_address}:8000/"
         puts "URL: #{@my_URL}"
-        @font = Gosu::Font.new(50, name: "fonts/NotoSansJP-Regular.ttf")
+        @font = Gosu::Font.new(@qr_size / 2, name: "fonts/NotoSansJP-Regular.ttf")
         # QRコード作成
         qrcode = RQRCode::QRCode.new(@my_URL)
 
@@ -153,7 +152,7 @@ class Qr_make
             module_px_size: 5,
             resize_exactly_to: false,
             resize_gte_to: false,
-            size: 100
+            size: @qr_size
         )
 
         # メモリ上のIOオブジェクトに書き出して、Gosu::Imageとして読み込み
@@ -185,7 +184,7 @@ class Qr_make
     end
 
     def draw
-        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, 500, 2, 1.0, 1.0, Gosu::Color::WHITE)
+        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, (600 - @qr_size), 2, 1.0, 1.0, Gosu::Color::WHITE)
         @qr_image.draw(@x_qr, @y_qr, 2)
     end
 end
