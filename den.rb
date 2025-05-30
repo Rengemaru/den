@@ -57,7 +57,7 @@ class Content
         @x = -600
         @y = 300
         @speed = -2
-        @display = 0
+        @display = 0 # 0:表示する, 1:表示しない
         @time = 0
     end
 
@@ -101,10 +101,6 @@ class Content
                 end
     end
 
-    def set_display(display)
-        @display = display.to_i
-    end
-
     def recalculate_layout
         @font_ratio = @font_size * 0.68
         @font_y_offset = @font_size * 0.45
@@ -119,6 +115,8 @@ class Content
         @time = Time.now.strftime("%H")
         if @time.to_i >= 19 || @time.to_i <= 7
             @display = 1
+        else
+            @display = 0
         end
     end
 
