@@ -63,11 +63,38 @@ class MessageServlet < BaseServlet
       target.instance.set_color(query["color"].to_s)
       target.instance.set_font_size(query["font_size"].to_s)
       target.instance.set_speed(query["speed"].to_s)
-      # ここでキャラクタや電光掲示板に表示する処理を書くことも可能
       succeeded(response)
     else
       failed(response)
     end
+  end
+end
+
+class StatusServlet < BaseServlet
+  def do_GET(request, response)
+    content = Content.instance
+    response.status = 200
+    response['Content-Type'] = 'application/json'
+    response.body = {
+      text: content.instance.input_text,
+      color: content.instance.input_color,
+      font_size: content.instance.input_font_size,
+      speed: content.instance.input_speed
+    }.to_json
+  end
+end
+
+# コンテンツクラス（シングルトン）
+class Content
+  include Singleton
+
+  attr_accessor :input_text, :input_color, :input_font_size, :input_speed
+
+  def initialize
+    @input_text = ""
+    @input_color = "1"
+    @input_font_size = "2"
+    @input_speed = "1"
   end
 end
 

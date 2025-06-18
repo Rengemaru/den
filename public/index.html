@@ -9,6 +9,14 @@
 <body>
 <h1>メッセージ送信フォーム</h1>
 
+<div id = "current-status">
+  <h2>現在の設定</h2>
+  <p>文字: <span id="current-text">未設定</span></p>
+  <p>色: <span id="current-color">未設定</span></p>
+  <p>大きさ: <span id="current-font-size">未設定</span></p>
+  <p>速度: <span id="current-speed">未設定</span></p>
+</div>
+
 <form action="/message" method="get">
   <label for="text">表示する文字を入力してください</label><br>
   <input type="text" id="text" name="text" required><br>
@@ -38,6 +46,22 @@
 
   <input type="submit" value="送信">
 </form>
+<script>
+  // 現在の設定を取得して表示
+  function updateCurrentStatus() {
+    fetch('/status')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('current-text').textContent = data.text;
+        document.getElementById('current-color').textContent = data.color;
+        document.getElementById('current-font-size').textContent = data.font_size;
+        document.getElementById('current-speed').textContent = data.speed;
+      });
+  }
+
+  // ページ読み込み時に現在の設定を表示
+  window.onload = updateCurrentStatus;
+</script>
 </body>
 </html>
 
