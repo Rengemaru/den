@@ -63,11 +63,42 @@ class MessageServlet < BaseServlet
       target.instance.set_color(query["color"].to_s)
       target.instance.set_font_size(query["font_size"].to_s)
       target.instance.set_speed(query["speed"].to_s)
-      # ここでキャラクタや電光掲示板に表示する処理を書くことも可能
       succeeded(response)
     else
       failed(response)
     end
+  end
+end
+
+class StatusServlet < BaseServlet
+  # GETリクエストに対する処理
+  # クエリパラメータから現在の状態を取得してJSON形式で返す
+  def do_GET(req, res)
+    content = Content.instance
+    res.status = 200
+    res['Content-Type'] = 'application/json'
+    res.body = {
+      text: content.input_text,
+      color: content.input_color,
+      font_size: content.input_font_size,
+      speed: content.input_speed
+    }.to_json
+  end
+end
+
+class StyleServlet < BaseServlet
+  def do_GET(req, res)
+    res.status = 200
+    res['Content-Type'] = 'text/css'
+    res.body = File.read(File.expand_path('./public/style.css'))
+  end
+end
+
+class ScriptServlet < BaseServlet
+  def do_GET(req, res)
+    res.status = 200
+    res['Content-Type'] = 'application/javascript'
+    res.body = File.read(File.expand_path('./public/index.js'))
   end
 end
 
@@ -87,7 +118,10 @@ class Server
     # エンドポイントのマウント
     @server.mount('/', IndexServlet)
     @server.mount('/message', MessageServlet)
-    @server.mount('/style.css', WEBrick::HTTPServlet::FileHandler, File.expand_path('./public/style.css'))
+    @server.mount('/status', StatusServlet)
+    @server.mount('/style.css', StyleServlet)
+    @server.mount('/index.js', ScriptServlet)
+
 
     # アプリケーション終了時の処理（サーバ停止）
     trap('INT') { @server.shutdown }

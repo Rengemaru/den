@@ -9,6 +9,16 @@
 <body>
 <h1>メッセージ送信フォーム</h1>
 
+<div id="current-status">
+  <div class="faq-question">現在の設定</div>
+  <div class="faq-answer">
+    <p>文字: <span id="current-text">未設定</span></p>
+    <p>色: <span id="current-color">未設定</span></p>
+    <p>大きさ: <span id="current-font-size">未設定</span></p>
+    <p>速度: <span id="current-speed">未設定</span></p>
+  </div>
+</div>
+
 <form action="/message" method="get">
   <label for="text">表示する文字を入力してください</label><br>
   <input type="text" id="text" name="text" required><br>
@@ -38,6 +48,7 @@
 
   <input type="submit" value="送信">
 </form>
+<script src="/index.js"></script>
 </body>
 </html>
 

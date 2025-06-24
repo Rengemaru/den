@@ -38,7 +38,7 @@ class Content
 
     include Singleton
 
-    attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2
+    attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2, :input_speed
     attr_reader :input_length, :font_ratio, :font_y_offset, :x, :y, :speed
     
     def initialize
