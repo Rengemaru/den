@@ -71,30 +71,18 @@ class MessageServlet < BaseServlet
 end
 
 class StatusServlet < BaseServlet
-  def do_GET(request, response)
+  # GETリクエストに対する処理
+  # クエリパラメータから現在の状態を取得してJSON形式で返す
+  def do_GET(req, res)
     content = Content.instance
-    response.status = 200
-    response['Content-Type'] = 'application/json'
-    response.body = {
-      text: content.instance.input_text,
-      color: content.instance.input_color,
-      font_size: content.instance.input_font_size,
-      speed: content.instance.input_speed
+    res.status = 200
+    res['Content-Type'] = 'application/json'
+    res.body = {
+      text: content.input_text,
+      color: content.input_color,
+      font_size: content.input_font_size,
+      speed: content.input_speed
     }.to_json
-  end
-end
-
-# コンテンツクラス（シングルトン）
-class Content
-  include Singleton
-
-  attr_accessor :input_text, :input_color, :input_font_size, :input_speed
-
-  def initialize
-    @input_text = ""
-    @input_color = "1"
-    @input_font_size = "2"
-    @input_speed = "1"
   end
 end
 
@@ -114,6 +102,7 @@ class Server
     # エンドポイントのマウント
     @server.mount('/', IndexServlet)
     @server.mount('/message', MessageServlet)
+    @server.mount('/status', StatusServlet)
 
     # アプリケーション終了時の処理（サーバ停止）
     trap('INT') { @server.shutdown }

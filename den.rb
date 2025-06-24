@@ -38,7 +38,7 @@ class Content
 
     include Singleton
 
-    attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2
+    attr_accessor :input_text, :input_color, :input_color_code, :input_font_size, :input_count, :font_size, :font1, :font2, :input_speed
     attr_reader :input_length, :font_ratio, :font_y_offset, :x, :y, :speed
     
     def initialize
@@ -60,9 +60,9 @@ class Content
 
     def set_text(text)
         @input_text = text
-        puts "input_text: #{@input_text}"
+        # puts "input_text: #{@input_text}"
         @input_count = @input_text.length / 3
-        puts "input_count: #{@input_count}"
+        # puts "input_count: #{@input_count}"
         recalculate_layout
         @x = -600
     end
@@ -102,10 +102,10 @@ class Content
 
     def recalculate_layout
         @font_ratio = @font_size * 0.68
-        puts "font_ratio: #{@font_ratio}"
+        # puts "font_ratio: #{@font_ratio}"
         @font_y_offset = @font_size * 0.45
         @input_length = @input_count * @font_ratio
-        puts "input_length: #{@input_length}"
+        # puts "input_length: #{@input_length}"
         @font1 = Gosu::Font.new(@font_size, name: "fonts/NotoSansJP-Regular.ttf")
         @font2 = Gosu::Font.new(@font_size, name: "fonts/NotoSansJP-Regular.ttf")
     end
