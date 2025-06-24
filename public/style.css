@@ -1,9 +1,9 @@
 /* *{
-    max-width: ;
+    max-width: 70%;
 } */
 input[type="text"], select {
     padding: 6px;
-    width: 50%;
+    width: 70%;
     border-radius: 5px;
     border: 2px solid #e7e7e7;
 }
@@ -11,7 +11,7 @@ input[type = "submit"] {
     padding: 6px;
     border: none;
     margin: 10px auto;
-    width: 50%;
+    width: 70%;
     background-color: rgb(0, 106, 255);
     color: white;
     border-radius: 5px;
@@ -21,4 +21,52 @@ form{
     padding: 20px;
     border-radius: 5px;
     width: 50%;
+}
+
+.faq-container {
+    width: 50%;
+    margin: 20px auto;
+    font-family: sans-serif;
+}
+
+.faq-question {
+    background: #f0f0f0;
+    cursor: pointer;
+    padding: 12px;
+    position: relative;
+}
+.faq-question::after {
+    content: "▶";
+    position: absolute;
+    right: 15px;
+    transition: transform 0.3s;
+}
+
+.faq-question.active::after {
+    transform: rotate(90deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 12px;
+    background: #fff;
+    border-top: 1px solid #ccc;
+}
+
+@media (max-width: 600px) {
+    form,
+    .faq-container {
+        width: 96vw;
+        min-width: 0;
+        padding: 10px 2vw;
+        box-sizing: border-box;
+    }
+    input[type="text"], select, input[type="submit"] {
+        width: 100%;
+        font-size: 1em;
+    }
+    .faq-question, .faq-answer {
+        font-size: 1em;
+        padding: 10px;
+    }
 }
