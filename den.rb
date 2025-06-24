@@ -115,6 +115,7 @@ class Content
         @time = Time.now.strftime("%H")
         if @time.to_i >= 19 || @time.to_i <= 7
             @display = 1
+            @input_text = ""
         else
             @display = 0
         end
