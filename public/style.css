@@ -53,9 +53,20 @@ form{
     border-top: 1px solid #ccc;
 }
 
+#current-status {
+    border: 2px solid #e7e7e7;
+    border-radius: 5px;
+    background: #fff;
+    padding: 20px;
+    width: 50%;
+    margin: 20px auto;
+    box-sizing: border-box;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
 @media (max-width: 600px) {
     form,
-    .faq-container {
+    .faq-container,
+    #current-status {
         width: 96vw;
         min-width: 0;
         padding: 10px 2vw;
