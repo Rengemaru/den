@@ -122,6 +122,7 @@ class Server
     @server.mount('/style.css', StyleServlet)
     @server.mount('/index.js', ScriptServlet)
 
+
     # アプリケーション終了時の処理（サーバ停止）
     trap('INT') { @server.shutdown }
   end

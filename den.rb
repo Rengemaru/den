@@ -53,16 +53,17 @@ class Content
         @input_length = Input_count * @font_ratio
         @font1 = Gosu::Font.new(Font_size, name: "fonts/NotoSansJP-Regular.ttf")
         @font2 = Gosu::Font.new(Font_size, name: "fonts/NotoSansJP-Regular.ttf")
+        @background_image = Gosu::Image.new("images/black_backgound_color.png", tileable: true)
         @x = -600
         @y = 300
         @speed = -2
+        @display = 0 # 0:表示する, 1:表示しない
+        @time = 0
     end
 
     def set_text(text)
         @input_text = text
-        # puts "input_text: #{@input_text}"
         @input_count = @input_text.length / 3
-        # puts "input_count: #{@input_count}"
         recalculate_layout
         @x = -600
     end
@@ -102,10 +103,8 @@ class Content
 
     def recalculate_layout
         @font_ratio = @font_size * 0.68
-        # puts "font_ratio: #{@font_ratio}"
         @font_y_offset = @font_size * 0.45
         @input_length = @input_count * @font_ratio
-        # puts "input_length: #{@input_length}"
         @font1 = Gosu::Font.new(@font_size, name: "fonts/NotoSansJP-Regular.ttf")
         @font2 = Gosu::Font.new(@font_size, name: "fonts/NotoSansJP-Regular.ttf")
     end
@@ -113,22 +112,32 @@ class Content
     def update
         @x += @speed
         @x = -@input_length + 500 if @x < -(@input_length + (@input_length - 500) + 400)
+        @time = Time.now.strftime("%H")
+        if @time.to_i >= 19 || @time.to_i <= 7
+            @display = 1
+        else
+            @display = 0
+        end
     end
 
     def draw
         @font1.draw_text(@input_text, @x, @y - @font_y_offset, 2, 1.0, 1.0, @input_color_code)
         @font2.draw_text(@input_text, @x + @input_length + 400, @y - @font_y_offset, 2, 1.0, 1.0, @input_color_code)
+        if @display == 1 
+            @background_image.draw(-100, -100, 4, 1000.0 / @background_image.width, 1000.0 / @background_image.height)
+        end
     end
 end
 
 class Qr_make
     def initialize
-        @x_qr = 800 - 100
-        @y_qr = 600 - 100
+        @qr_size = 133 # QRコードのサイズ
+        @x_qr = 800 - @qr_size
+        @y_qr = 600 - @qr_size
         @my_ip = my_address.chomp
         @my_URL = "http://#{my_address}:8000/"
         puts "URL: #{@my_URL}"
-        @font = Gosu::Font.new(50, name: "fonts/NotoSansJP-Regular.ttf")
+        @font = Gosu::Font.new(@qr_size / 2, name: "fonts/NotoSansJP-Regular.ttf")
         # QRコード作成
         qrcode = RQRCode::QRCode.new(@my_URL)
 
@@ -143,7 +152,7 @@ class Qr_make
             module_px_size: 5,
             resize_exactly_to: false,
             resize_gte_to: false,
-            size: 100
+            size: @qr_size
         )
 
         # メモリ上のIOオブジェクトに書き出して、Gosu::Imageとして読み込み
@@ -175,7 +184,7 @@ class Qr_make
     end
 
     def draw
-        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, 500, 2, 1.0, 1.0, Gosu::Color::WHITE)
+        @font.draw_text("Wi-Fiを#{Input_ssid}に繋いで\nQRコードを読み取ってください", 0, (600 - @qr_size), 2, 1.0, 1.0, Gosu::Color::WHITE)
         @qr_image.draw(@x_qr, @y_qr, 2)
     end
 end
