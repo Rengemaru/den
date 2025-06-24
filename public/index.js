@@ -1,4 +1,25 @@
-  // 現在の設定を取得して表示
+// document.querySelectorAll('.faq-question').forEach(question => {
+//     question.addEventListener('click', () => {
+//         question.classList.toggle('active');
+//         const answer = question.nextElementSibling;
+//         answer.style.display = (answer.style.display === 'block') ? 'none' : 'block';
+//     });
+// });
+
+function setupFaqToggle() {
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            question.classList.toggle('active');
+            const answer = question.nextElementSibling;
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+            } else {
+                answer.style.display = 'block';
+            }
+        });
+    });
+}
+
 function updateCurrentStatus() {
     fetch('/status')
     .then(response => response.json())
@@ -10,13 +31,8 @@ function updateCurrentStatus() {
     });
 }
 
-document.querySelectorAll('.faq-question').forEach(question => {
-    question.addEventListener('click', () => {
-        question.classList.toggle('active');
-        const answer = question.nextElementSibling;
-        answer.style.display = (answer.style.display === 'block') ? 'none' : 'block';
-    });
-});
-
-  // ページ読み込み時に現在の設定を表示
-window.onload = updateCurrentStatus;
+// ページ読み込み時に両方実行
+window.onload = function() {
+    setupFaqToggle();
+    updateCurrentStatus();
+};

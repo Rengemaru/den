@@ -86,6 +86,22 @@ class StatusServlet < BaseServlet
   end
 end
 
+class StyleServlet < BaseServlet
+  def do_GET(req, res)
+    res.status = 200
+    res['Content-Type'] = 'text/css'
+    res.body = File.read(File.expand_path('./public/style.css'))
+  end
+end
+
+class ScriptServlet < BaseServlet
+  def do_GET(req, res)
+    res.status = 200
+    res['Content-Type'] = 'application/javascript'
+    res.body = File.read(File.expand_path('./public/index.js'))
+  end
+end
+
 # HTTPサーバクラス
 class Server
   # コンストラクタ
@@ -103,6 +119,8 @@ class Server
     @server.mount('/', IndexServlet)
     @server.mount('/message', MessageServlet)
     @server.mount('/status', StatusServlet)
+    @server.mount('/style.css', StyleServlet)
+    @server.mount('/index.js', ScriptServlet)
 
     # アプリケーション終了時の処理（サーバ停止）
     trap('INT') { @server.shutdown }
