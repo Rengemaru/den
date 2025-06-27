@@ -97,6 +97,8 @@ class Content
                     when "1" then -2
                     when "2" then -4
                     when "3" then -8
+                    when "4" then -64
+                    when "5" then -128
                     else -2
                 end
     end
