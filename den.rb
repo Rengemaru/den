@@ -143,6 +143,7 @@ class Qr_make
         @font = Gosu::Font.new(@qr_size / 2, name: "fonts/NotoSansJP-Regular.ttf")
         # QRコード作成
         qrcode = RQRCode::QRCode.new(@my_URL)
+        key_gets_frag = 0
 
         # QRコードをPNGに変換
         png = qrcode.as_png(
