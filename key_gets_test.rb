@@ -10,7 +10,7 @@ class KeyGetsTest < Gosu::Window
       @small_font = Gosu::Font.new(20, name: "fonts/NotoSansJP-Regular.ttf")
       @medium_font = Gosu::Font.new(28, name: "fonts/NotoSansJP-Regular.ttf")
       
-      @input_text = "aaaaaaa"
+      @input_text = ""
       @x = 0
       @y = 300
       @speed = -2
@@ -284,7 +284,7 @@ class KeyGetsTest < Gosu::Window
       # current_color = @colors[@current_color_index]
       # @small_font.draw_text("現在の色: #{@color_names[@current_color_index]}", 10, 100, 3, 1.0, 1.0, current_color)
       # @small_font.draw_text("現在のサイズ: #{@size_names[@current_size_index]} (#{@font_sizes[@current_size_index]}px)", 10, 125, 3, 1.0, 1.0, Gosu::Color::WHITE)
-      # @small_font.draw_text("現在の速度: #{@speed_names[@current_speed_index]}", 10, 150, 3, 1.0, 1.0, Gosu::Color::WHITE)
+      @small_font.draw_text("現在のframe_count: #{@frame_count}", 10, 150, 3, 1.0, 1.0, Gosu::Color::WHITE)
     end
 end
 
