@@ -194,7 +194,7 @@ class Qr_make
 end
 class Window < Gosu::Window
     def initialize
-        super 800, 600
+        super 800, 600, { fullscreen: true }
         self.caption = "部室電光掲示板"
         @content = Content.instance
         @qr_make = Qr_make.new
