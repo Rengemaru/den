@@ -59,7 +59,8 @@ class MessageServlet < BaseServlet
     query = request.query
     target = parse_target(query)
     if validate(query, [:text, :color, :font_size])
-      target.instance.set_text(query["text"].to_s)
+      p __ENCODING__
+      target.instance.set_text(query["text"].encode('UTF-8', 'UTF-8'))
       target.instance.set_color(query["color"].to_s)
       target.instance.set_font_size(query["font_size"].to_s)
       target.instance.set_speed(query["speed"].to_s)

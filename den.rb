@@ -7,7 +7,7 @@ require 'chunky_png'
 require 'stringio'
 
 require_relative 'webrick'
-
+p __ENCODING__
 # Input_textに標準入力を格納
 print "表示する文字を入力してください："
 Input_text = gets.chomp
@@ -118,13 +118,13 @@ class Content
         @x += @speed
         @x = -@input_length + 500 if @x < -(@input_length + (@input_length - 500) + 400)
         @time = Time.now.strftime("%H")
-        # 時間制御は一旦無効化
-        # if @time.to_i >= 19 || @time.to_i <= 7
-        #     @display = 1
-        #     @input_text = ""
-        # else
-        #     @display = 0
-        # end
+        # デバック時は時間を無効化すること
+        if @time.to_i >= 19 || @time.to_i <= 7
+            @display = 1
+            @input_text = ""
+        else
+            @display = 0
+        end
     end
 
     def draw

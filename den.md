@@ -43,6 +43,8 @@ end
 
 ---
 
+<br>
+
 ## Contentクラス詳細アルゴリズム
 
 ### 初期化アルゴリズム（initialize）
@@ -407,6 +409,7 @@ Gosu.draw_rect(
 Gosu.draw_rect(50, 50, 700, 500, Gosu::Color.new(200, 0, 0, 0), 11)  # 外枠
 Gosu.draw_rect(55, 55, 690, 490, Gosu::Color.new(180, 30, 30, 30), 12) # 内枠
 ```
+<br>
 
 ### 5. 画像処理
 
@@ -511,6 +514,7 @@ def draw
     @small_font.draw_text("text", x, y, z)
 end
 ```
+<br><br>
 
 ### 2. 条件付き描画
 
